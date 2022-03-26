@@ -2722,6 +2722,41 @@ extern char * ftoa(float f, int * status);
 
 unsigned short result;
 
+void exercise_msb(){
+
+    unsigned short tmp = result >> 6;
+
+    if (tmp & 1){
+        RB0 = 1;
+    }
+    if (tmp & 2) {
+        RB1 = 1;
+    }
+    if (tmp & 4) {
+        RB2 = 1;
+    }
+    if (tmp & 8) {
+        RB3 = 1;
+    }
+}
+
+void exercise_lsb(){
+
+    unsigned short tmp = (0b1111 & result);
+
+    if (tmp & 1){
+        RB0 = 1;
+    }
+    if (tmp & 2) {
+        RB1 = 1;
+    }
+    if (tmp & 4) {
+        RB2 = 1;
+    }
+    if (tmp & 8) {
+        RB3 = 1;
+    }
+}
 
 void main(void) {
 
@@ -2780,18 +2815,8 @@ void main(void) {
         RB3 = 0;
 
 
-        if ((result / 64) & 1){
-            RB0 = 1;
-        }
-        if ((result / 64) & 2) {
-            RB1 = 1;
-        }
-        if ((result / 64) & 4) {
-            RB2 = 1;
-        }
-        if ((result / 64) & 8) {
-            RB3 = 1;
-        }
+        exercise_msb();
+
 
         PIR1bits.ADIF = 0;
 
